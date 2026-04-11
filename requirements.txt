@@ -3,5 +3,3 @@ plotly
 pandas
 numpy
 scikit-learn
-torch
-neural-trees
