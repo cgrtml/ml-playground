@@ -30,6 +30,13 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.neural_network import MLPClassifier
 from sklearn.naive_bayes import GaussianNB
 
+# neural-trees — optional, graceful fallback if not installed
+try:
+    from neural_trees import SoftDecisionTree
+    NEURAL_TREES_AVAILABLE = True
+except ImportError:
+    NEURAL_TREES_AVAILABLE = False
+
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -93,6 +100,9 @@ CLASSIFIERS = {
     "Neural Network (MLP)": "mlp",
     "Naive Bayes": "nb",
 }
+
+if NEURAL_TREES_AVAILABLE:
+    CLASSIFIERS["⚡ Soft Decision Tree"] = "sdt"
 
 
 def load_dataset(name: str, n_samples: int = 500, noise: float = 0.2, random_state: int = 42):
@@ -171,6 +181,12 @@ def build_classifier(name: str, params: dict):
         )
     elif name == "nb":
         return GaussianNB()
+    elif name == "sdt" and NEURAL_TREES_AVAILABLE:
+        return SoftDecisionTree(
+            depth=params.get("depth", 4),
+            max_epochs=params.get("max_epochs", 30),
+            penalty_coef=params.get("penalty_coef", 1e-3),
+        )
     raise ValueError(f"Unknown classifier: {name}")
 
 
@@ -367,6 +383,10 @@ with st.sidebar:
             params_a["n_neighbors"] = st.slider("K neighbors", 1, 30, 5, key="knn_a")
         elif clf_name_a == "mlp":
             params_a["hidden_layer_sizes"] = st.slider("Hidden units", 8, 256, 64, key="mlp_a")
+        elif clf_name_a == "sdt":
+            params_a["depth"] = st.slider("Tree depth", 2, 7, 4, key="sdt_depth_a")
+            params_a["max_epochs"] = st.slider("Epochs", 10, 60, 30, key="sdt_epochs_a")
+            params_a["penalty_coef"] = st.select_slider("Penalty", [1e-4, 1e-3, 1e-2], value=1e-3, key="sdt_pen_a")
 
     # ── Model 2 (compare mode) ──
     if mode == "⚔️ Compare Two Models":
@@ -390,6 +410,10 @@ with st.sidebar:
                 params_b["n_neighbors"] = st.slider("K neighbors", 1, 30, 5, key="knn_b")
             elif clf_name_b == "mlp":
                 params_b["hidden_layer_sizes"] = st.slider("Hidden units", 8, 256, 64, key="mlp_b")
+            elif clf_name_b == "sdt":
+                params_b["depth"] = st.slider("Tree depth", 2, 7, 4, key="sdt_depth_b")
+                params_b["max_epochs"] = st.slider("Epochs", 10, 60, 30, key="sdt_epochs_b")
+                params_b["penalty_coef"] = st.select_slider("Penalty", [1e-4, 1e-3, 1e-2], value=1e-3, key="sdt_pen_b")
 
     st.markdown("---")
     run_btn = st.button("▶ Run", use_container_width=True, type="primary")
