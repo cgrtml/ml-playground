@@ -2,7 +2,9 @@
 
 > Pick an algorithm, pick a dataset, tune the hyperparameters — see the decision boundary update live.
 
-[![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?logo=streamlit&logoColor=white)](https://streamlit.io)
+**[🚀 Live Demo → ml-playground-fdzxns9xf9xrwi98gxy4n8.streamlit.app](https://ml-playground-fdzxns9xf9xrwi98gxy4n8.streamlit.app)**
+
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://ml-playground-fdzxns9xf9xrwi98gxy4n8.streamlit.app)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
