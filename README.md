@@ -1,7 +1,6 @@
 # ML Playground
 
-> **Visualize any classifier on any dataset — interactively.**
-> Pick an algorithm, tune hyperparameters, and watch the decision boundary update live.
+> Pick an algorithm, pick a dataset, tune the hyperparameters — see the decision boundary update live.
 
 [![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?logo=streamlit&logoColor=white)](https://streamlit.io)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org)
@@ -9,23 +8,25 @@
 
 ---
 
-## What is this?
+I built this because I kept explaining ML concepts to people and the best I could do was
+wave my hands at a static diagram. Now I can just open this, drag a slider, and show
+exactly what happens when you crank up the SVM's C parameter or drop the tree depth to 1.
 
-ML Playground is a **Streamlit web app** for exploring machine learning classifiers visually. No code required — just pick your settings and hit Run.
+No code required on the user side — just run it and play.
 
-## Features
+## What's inside
 
-| Feature | Details |
-|---------|---------|
-| **8 algorithms** | Decision Tree, Random Forest, Gradient Boosting, SVM, KNN, Logistic Regression, MLP, Naive Bayes |
-| **7 datasets** | Moons, Circles, Blobs, Iris, Wine, Breast Cancer |
-| **Decision boundary** | Interactive Plotly plot, train/test split shown separately |
-| **Compare mode** | Run two models side by side on identical data |
-| **Cross-validation** | 5-fold CV scores with mean ± std |
-| **Confusion matrix** | Color-coded heatmap for test set |
-| **Hyperparameter sliders** | Tune in real time |
+| | |
+|---|---|
+| **8 classifiers** | Decision Tree, Random Forest, Gradient Boosting, SVM, KNN, Logistic Regression, MLP, Naive Bayes |
+| **7 datasets** | Moons, Circles, Blobs (2 & 3 class), Iris, Wine, Breast Cancer |
+| **Decision boundary** | Interactive Plotly plot with train/test points shown separately |
+| **Compare mode** | Two models side by side on the exact same data split |
+| **Cross-validation** | 5-fold CV so you're not fooled by a lucky test split |
+| **Confusion matrix** | Where exactly does each model make mistakes |
+| **Hyperparameter sliders** | Every key parameter exposed — change and re-run instantly |
 
-## Quickstart
+## Run it
 
 ```bash
 git clone https://github.com/cgrtml/ml-playground.git
@@ -34,48 +35,32 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-Open [http://localhost:8501](http://localhost:8501) in your browser.
+Opens at [http://localhost:8501](http://localhost:8501).
 
-## Screenshots
+## How to use
 
-> Single model mode — Decision Tree on Moons dataset
+1. **Sidebar → Dataset** — pick synthetic (moons/circles/blobs) or real (iris/wine/cancer)
+2. **Sidebar → Mode** — single model or compare two
+3. **Sidebar → Algorithm** — choose and tune
+4. **Hit ▶ Run**
 
-```
-[ Decision Boundary Plot ]  [ Confusion Matrix ]
-                            [ 5-Fold CV Scores  ]
-```
+The train points (circles) and test points (diamonds) are shown separately on the boundary
+plot so you can immediately spot overfitting visually.
 
-> Compare mode — SVM vs KNN side by side
+## Roadmap
 
-```
-[ Model A boundary ]  [ Model B boundary ]
-[ Model A CM       ]  [ Model B CM       ]
-[ Head-to-Head bar chart                 ]
-```
-
-## Usage
-
-1. **Sidebar → Dataset**: Choose a synthetic or real-world dataset
-2. **Sidebar → Mode**: Single model or compare two models
-3. **Sidebar → Algorithm**: Pick classifier and tune hyperparameters
-4. **Click ▶ Run**
-
-## Inspiration
-
-This project is inspired by the intuitions built in:
-
-> Alpaydın, E. (2020). *Introduction to Machine Learning* (4th ed.). MIT Press.
-
-The visual intuition behind decision boundaries, bias-variance tradeoff, and model comparison directly maps to concepts explained in that textbook. See also [neural-trees](https://github.com/cgrtml/neural-trees) for research-grade implementations of algorithms from Alpaydın's papers.
-
-## Contributing
-
-Open to PRs! Ideas welcome:
-- [ ] Regression mode
 - [ ] Upload your own CSV
-- [ ] Animated training (epoch-by-epoch for neural nets)
-- [ ] Feature importance plots
+- [ ] Regression mode
+- [ ] Animated training for neural nets (epoch by epoch)
+- [ ] Feature importance panel for tree-based models
+
+If you want to add something, open an issue first so we don't duplicate work.
+
+## Related
+
+[neural-trees](https://github.com/cgrtml/neural-trees) — research-grade implementations
+of differentiable tree algorithms (Soft Decision Trees, HMoE, etc.) from Alpaydın's papers.
 
 ## License
 
-MIT
+MIT — see [LICENSE](LICENSE).
