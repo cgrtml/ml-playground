@@ -49,15 +49,6 @@ Opens at [http://localhost:8501](http://localhost:8501).
 The train points (circles) and test points (diamonds) are shown separately on the boundary
 plot so you can immediately spot overfitting visually.
 
-## Roadmap
-
-- [ ] Upload your own CSV
-- [ ] Regression mode
-- [ ] Animated training for neural nets (epoch by epoch)
-- [ ] Feature importance panel for tree-based models
-
-If you want to add something, open an issue first so we don't duplicate work.
-
 ## Related
 
 [neural-trees](https://github.com/cgrtml/neural-trees) — research-grade implementations
