@@ -428,11 +428,10 @@ if not run_btn:
     Pick a dataset from the sidebar, pick an algorithm, hit **Run**.
 
     The colored regions show where each model draws the line between classes.
-    Train points are circles, test points are diamonds — so you can immediately
-    see if the model is memorizing training data or actually generalizing.
+    Train points are circles, test points are diamonds.
+    If the boundary looks perfect on training data but messy on test points, that's overfitting.
 
-    Switch to **Compare** mode to run two algorithms on the exact same split
-    and see where they agree or disagree.
+    Switch to **Compare** mode to run two algorithms on the exact same split.
 
     Supported algorithms: Decision Tree · Random Forest · Gradient Boosting · SVM · KNN · Logistic Regression · MLP · Naive Bayes
     """)
