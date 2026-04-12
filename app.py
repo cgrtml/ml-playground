@@ -421,7 +421,7 @@ with st.sidebar:
 # ── Main area ─────────────────────────────────────────────────────────────────
 
 st.markdown('<h1 class="main-header">ML Playground</h1>', unsafe_allow_html=True)
-st.markdown('<p class="sub-header">Visualize any classifier on any dataset — interactively</p>', unsafe_allow_html=True)
+st.markdown('<p class="sub-header">Pick an algorithm, pick a dataset, see what happens.</p>', unsafe_allow_html=True)
 
 if not run_btn:
     st.markdown("""
