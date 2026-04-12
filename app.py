@@ -424,17 +424,17 @@ st.markdown('<h1 class="main-header">ML Playground</h1>', unsafe_allow_html=True
 st.markdown('<p class="sub-header">Visualize any classifier on any dataset — interactively</p>', unsafe_allow_html=True)
 
 if not run_btn:
-    st.info("👈 Configure your dataset and model in the sidebar, then click **Run**.")
     st.markdown("""
-    ### What can you do here?
-    - **Visualize decision boundaries** — see exactly how each algorithm carves up feature space
-    - **Compare two models** side by side on identical data splits
-    - **Tune hyperparameters** and watch how the boundary changes in real time
-    - **Cross-validation scores** — not just one test set, but 5-fold robustness check
-    - **Confusion matrix** — where does the model make mistakes?
+    Pick a dataset from the sidebar, pick an algorithm, hit **Run**.
 
-    ### Algorithms available
-    Decision Tree · Random Forest · Gradient Boosting · SVM · KNN · Logistic Regression · MLP · Naive Bayes
+    The colored regions show where each model draws the line between classes.
+    Train points are circles, test points are diamonds — so you can immediately
+    see if the model is memorizing training data or actually generalizing.
+
+    Switch to **Compare** mode to run two algorithms on the exact same split
+    and see where they agree or disagree.
+
+    Supported algorithms: Decision Tree · Random Forest · Gradient Boosting · SVM · KNN · Logistic Regression · MLP · Naive Bayes
     """)
     st.stop()
 
