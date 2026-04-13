@@ -106,6 +106,8 @@ if NEURAL_TREES_AVAILABLE:
 
 
 def load_dataset(name: str, n_samples: int = 500, noise: float = 0.2, random_state: int = 42):
+    feature_names = ("Feature 1", "Feature 2")
+
     if name == "moons":
         X, y = make_moons(n_samples=n_samples, noise=noise, random_state=random_state)
     elif name == "circles":
@@ -123,18 +125,21 @@ def load_dataset(name: str, n_samples: int = 500, noise: float = 0.2, random_sta
     elif name == "iris":
         data = load_iris()
         X, y = data.data[:, :2], data.target
+        feature_names = (data.feature_names[0], data.feature_names[1])
     elif name == "wine":
         data = load_wine()
         X, y = data.data[:, :2], data.target
+        feature_names = (data.feature_names[0], data.feature_names[1])
     elif name == "cancer":
         data = load_breast_cancer()
         pca = PCA(n_components=2, random_state=random_state)
         X = pca.fit_transform(data.data)
         y = data.target
+        feature_names = ("PC 1", "PC 2")
     else:
         X, y = make_moons(n_samples=n_samples, noise=noise, random_state=random_state)
 
-    return X, y
+    return X, y, feature_names
 
 
 def build_classifier(name: str, params: dict):
@@ -211,7 +216,7 @@ def make_decision_boundary(clf, X, y, scaler, resolution=200):
     return xx, yy, Z.reshape(xx.shape)
 
 
-def plot_decision_boundary(clf, X_train, X_test, y_train, y_test, scaler, title=""):
+def plot_decision_boundary(clf, X_train, X_test, y_train, y_test, scaler, title="", feature_names=("Feature 1", "Feature 2")):
     """Build a Plotly figure with decision boundary + train/test scatter."""
     classes = np.unique(np.concatenate([y_train, y_test]))
     n_classes = len(classes)
@@ -282,8 +287,8 @@ def plot_decision_boundary(clf, X_train, X_test, y_train, y_test, scaler, title=
 
     fig.update_layout(
         title=dict(text=title, font=dict(size=14)),
-        xaxis_title="Feature 1",
-        yaxis_title="Feature 2",
+        xaxis_title=feature_names[0],
+        yaxis_title=feature_names[1],
         height=480,
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(248,249,250,1)",
@@ -438,7 +443,7 @@ if not run_btn:
     st.stop()
 
 # ── Data loading & preprocessing ──────────────────────────────────────────────
-X, y = load_dataset(dataset_name, n_samples, noise, int(random_state))
+X, y, feature_names = load_dataset(dataset_name, n_samples, noise, int(random_state))
 
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=test_size, random_state=int(random_state), stratify=y
@@ -485,6 +490,7 @@ if mode == "🔬 Single Model":
             plot_decision_boundary(
                 clf_a, X_train, X_test, y_train, y_test, scaler,
                 title=f"{clf_label_a} — Decision Boundary",
+                feature_names=feature_names,
             ),
             use_container_width=True,
         )
@@ -514,6 +520,7 @@ else:
             plot_decision_boundary(
                 clf_a, X_train, X_test, y_train, y_test, scaler,
                 title="Model A — Decision Boundary",
+                feature_names=feature_names,
             ),
             use_container_width=True,
         )
@@ -533,6 +540,7 @@ else:
             plot_decision_boundary(
                 clf_b, X_train, X_test, y_train, y_test, scaler,
                 title="Model B — Decision Boundary",
+                feature_names=feature_names,
             ),
             use_container_width=True,
         )
