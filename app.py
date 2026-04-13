@@ -125,11 +125,15 @@ def load_dataset(name: str, n_samples: int = 500, noise: float = 0.2, random_sta
     elif name == "iris":
         data = load_iris()
         X, y = data.data[:, :2], data.target
-        feature_names = (data.feature_names[0], data.feature_names[1])
+        feature_names = tuple(
+            n.replace(" (cm)", "").title() for n in data.feature_names[:2]
+        )
     elif name == "wine":
         data = load_wine()
         X, y = data.data[:, :2], data.target
-        feature_names = (data.feature_names[0], data.feature_names[1])
+        feature_names = tuple(
+            n.replace("_", " ").title() for n in data.feature_names[:2]
+        )
     elif name == "cancer":
         data = load_breast_cancer()
         pca = PCA(n_components=2, random_state=random_state)
@@ -195,7 +199,7 @@ def build_classifier(name: str, params: dict):
     raise ValueError(f"Unknown classifier: {name}")
 
 
-def make_decision_boundary(clf, X, y, scaler, resolution=200):
+def make_decision_boundary(clf, X, y, scaler, resolution=200):  # y unused, kept for signature clarity
     """Create a meshgrid and predict class probabilities for background coloring."""
     x_min, x_max = X[:, 0].min() - 0.5, X[:, 0].max() + 0.5
     y_min, y_max = X[:, 1].min() - 0.5, X[:, 1].max() + 0.5
@@ -230,7 +234,8 @@ def plot_decision_boundary(clf, X_train, X_test, y_train, y_test, scaler, title=
     ]
     point_colors = ["#636EFA", "#EF553B", "#00CC96", "#FFA15A"]
 
-    xx, yy, Z = make_decision_boundary(clf, X_train, y_train, scaler)
+    X_all = np.vstack([X_train, X_test])
+    xx, yy, Z = make_decision_boundary(clf, X_all, None, scaler)
 
     fig = go.Figure()
 
@@ -252,7 +257,6 @@ def plot_decision_boundary(clf, X_train, X_test, y_train, y_test, scaler, title=
     # Training points
     for c in classes:
         mask = y_train == c
-        X_s = scaler.inverse_transform(scaler.transform(X_train))
         fig.add_trace(go.Scatter(
             x=X_train[mask, 0],
             y=X_train[mask, 1],
